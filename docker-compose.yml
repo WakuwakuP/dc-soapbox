@@ -4,7 +4,7 @@ services:
   nginx:
     build: .
     ports:
-      - 4001:3000
+      - ${SOAPBOX_PORT}:80
     volumes:
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./config/nginx/templates:/etc/nginx/templates:ro
@@ -15,7 +15,7 @@ services:
       - caddy
     labels:
       caddy: ${SOAPBOX_HOSTNAME}
-      caddy.reverse_proxy: "nginx:4001"
+      caddy.reverse_proxy: nginx:${SOAPBOX_PORT}
 
 networks:
   caddy:
