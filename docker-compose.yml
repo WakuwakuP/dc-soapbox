@@ -10,12 +10,13 @@ services:
       - ./setting/nginx/templates:/etc/nginx/templates
     environment:
       SOAPBOX_HOSTNAME: ${SOAPBOX_HOSTNAME}
+      SOAPBOX_PORT: ${SOAPBOX_PORT}
       PLEROMA_HOSTNAME: ${PLEROMA_HOSTNAME}
     networks:
       - caddy
     labels:
       caddy: ${SOAPBOX_HOSTNAME}
-      caddy.reverse_proxy: "nginx:80"
+      caddy.reverse_proxy: "nginx:${SOAPBOX_PORT}"
 
 networks:
   caddy:
