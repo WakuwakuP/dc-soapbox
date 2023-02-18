@@ -1,10 +1,19 @@
-FROM nginx:latest
+FROM node:18 AS builder
 
 RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    && rm -rf /var/lib/apt/lists/*
+  git \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o /tmp/soapbox-fe.zip \
-  && unzip /tmp/soapbox-fe.zip -d /opt/soapbox \
-    && rm /tmp/soapbox-fe.zip
+RUN git clone https://gitlab.com/soapbox-pub/soapbox.git /opt/soapbox
+
+WORKDIR /opt/soapbox
+
+RUN cd /opt/soapbox & yarn
+
+COPY .env /opt/soapbox/
+
+RUN cd /opt/soapbox & yarn build
+
+FROM nginx:latest
+
+COPY --from=builder /opt/soapbox/static /opt/soapbox/
