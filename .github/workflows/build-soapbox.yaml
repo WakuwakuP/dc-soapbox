@@ -32,10 +32,8 @@ jobs:
         run: cd soapbox && yarn
       - name: build
         run: |
+          env
           cd soapbox
-          echo "NODE_ENV=$NODE_ENV" >> .env
-          echo "BACKEND_URL=$BACKEND_URL" >> .env
-          echo "PROXY_HTTPS_INSECURE=$PROXY_HTTPS_INSECURE" >> .env
           yarn build
       - name: Upload Build
         uses: actions/upload-artifact@v2
