@@ -7,4 +7,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o /tmp/soapbox-fe.zip \
   && unzip /tmp/soapbox-fe.zip -o -d /opt/soapbox \
-    && rm /soapbox-fe.zip
+    && rm /tmp/soapbox-fe.zip
