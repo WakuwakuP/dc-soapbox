@@ -15,7 +15,7 @@ services:
       SOAPBOX_PORT: ${SOAPBOX_PORT}
       LETSENCRYPT_HOST: ${SOAPBOX_HOSTNAME}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
-      LETSENCRYPT_TEST: false
+      LETSENCRYPT_TEST: "false"
     networks:
       - front
 
