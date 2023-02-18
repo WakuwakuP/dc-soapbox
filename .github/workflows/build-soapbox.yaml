@@ -9,7 +9,11 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - run: env
+      - name: Set Environment Variables
+        run: |
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> $GITHUB_ENV
+          echo "BACKEND_URL=${{ secrets.BACKEND_URL }}" >> $GITHUB_ENV
+          echo "PROXY_HTTPS_INSECURE=${{ secrets.PROXY_HTTPS_INSECURE }}" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           submodules: true
@@ -28,10 +32,6 @@ jobs:
         run: cd soapbox && yarn
       - name: yarn build
         run: cd soapbox && yarn build
-        env:
-          PROXY_HTTPS_INSECURE: ${{ secrets.PROXY_HTTPS_INSECURE }}
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}}
       - name: Upload Build
         uses: actions/upload-artifact@v2
         with:
