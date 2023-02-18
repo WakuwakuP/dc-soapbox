@@ -5,11 +5,6 @@ on:
     branches:
       - master
 
-env:
-  NODE_ENV: ${{ secrets.NODE_ENV }}
-  BACKEND_URL: ${{ secrets.BACKEND_URL }}
-  PROXY_HTTPS_INSECURE: ${{ secrets.PROXY_HTTPS_INSECURE }}
-
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -35,6 +30,10 @@ jobs:
           env
           cd soapbox
           yarn build
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          PROXY_HTTPS_INSECURE: ${{ secrets.PROXY_HTTPS_INSECURE }}
       - name: Upload Build
         uses: actions/upload-artifact@v2
         with:
