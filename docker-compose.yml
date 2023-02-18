@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   nginx:
-    image: .
+    build: .
     ports:
       - 80:80
     volumes:
@@ -11,6 +11,12 @@ services:
     environment:
       SOAPBOX_HOSTNAME: ${SOAPBOX_HOSTNAME}
       PLEROMA_HOSTNAME: ${PLEROMA_HOSTNAME}
+    networks:
+      - caddy
     labels:
       caddy: ${SOAPBOX_HOSTNAME}
       caddy.reverse_proxy: "nginx:80"
+
+networks:
+  caddy:
+    external: true
