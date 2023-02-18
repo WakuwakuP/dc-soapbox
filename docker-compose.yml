@@ -15,7 +15,7 @@ services:
       - caddy
     labels:
       caddy: ${SOAPBOX_HOSTNAME}
-      caddy.reverse_proxy: nginx:${SOAPBOX_PORT}
+      caddy.reverse_proxy: "nginx:${SOAPBOX_PORT}"
 
 networks:
   caddy:
