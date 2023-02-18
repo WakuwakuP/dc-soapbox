@@ -16,20 +16,17 @@ jobs:
         with:
           node-version: '18'
       - uses: actions/cache@v2
+        id: cache
         with:
           path: soapbox/node-modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('soapbox/yarn.lock') }}-${{ hashFiles('soapbox/package.json') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: move to soapbox
-        run: |
-          cd soapbox
       - name: yarn install
-        run: |
-          yarn
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: cd soapbox && yarn
       - name: yarn build
-        run: |
-          yarn build
+        run: cd soapbox && yarn build
       - name: Upload Build
         uses: actions/upload-artifact@v2
         with:
