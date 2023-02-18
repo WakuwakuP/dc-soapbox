@@ -5,15 +5,15 @@ on:
     branches:
       - master
 
+env:
+  NODE_ENV: ${{ vars.NODE_ENV }}
+  BACKEND_URL: ${{ vars.BACKEND_URL }}
+  PROXY_HTTPS_INSECURE: ${{ vars.PROXY_HTTPS_INSECURE }}
+
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set Environment Variables
-        run: |
-          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> $GITHUB_ENV
-          echo "BACKEND_URL=${{ secrets.BACKEND_URL }}" >> $GITHUB_ENV
-          echo "PROXY_HTTPS_INSECURE=${{ secrets.PROXY_HTTPS_INSECURE }}" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           submodules: true
@@ -30,15 +30,15 @@ jobs:
       - name: yarn install
         if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }}
         run: cd soapbox && yarn
-      # - name: yarn build
-      #   run: | 
-      #     cd soapbox
-      #     echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
-      #     echo "BACKEND_URL=${{ secrets.BACKEND_URL }}" >> .env
-      #     echo "PROXY_HTTPS_INSECURE=${{ secrets.PROXY_HTTPS_INSECURE }}" >> .env
-      #     yarn build
-      # - name: Upload Build
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: soapbox-fe
-      #     path: soapbox/static
+      - name: build
+        run: | 
+          cd soapbox
+          echo "NODE_ENV=${{ env.NODE_ENV }}" >> .env
+          echo "BACKEND_URL=${{ env.BACKEND_URL }}" >> .env
+          echo "PROXY_HTTPS_INSECURE=${{ env.PROXY_HTTPS_INSECURE }}" >> .env
+          yarn build
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: soapbox-fe
+          path: soapbox/static
