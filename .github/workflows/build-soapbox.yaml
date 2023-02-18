@@ -31,11 +31,12 @@ jobs:
         if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }}
         run: cd soapbox && yarn
       - name: yarn build
-        run: cd soapbox && yarn build
-        env: 
-          NODE_ENV: ${{ env.NODE_ENV }}
-          BACKEND_URL: ${{ env.BACKEND_URL }}
-          PROXY_HTTPS_INSECURE: ${{ env.PROXY_HTTPS_INSECURE }}
+        run: | 
+          cd soapbox
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
+          echo "BACKEND_URL=${{ secrets.BACKEND_URL }}" >> .env
+          echo "PROXY_HTTPS_INSECURE=${{ secrets.PROXY_HTTPS_INSECURE }}" >> .env
+          yarn build
       - name: Upload Build
         uses: actions/upload-artifact@v2
         with:
