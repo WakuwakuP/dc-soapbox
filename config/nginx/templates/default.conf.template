@@ -1,8 +1,8 @@
 server {
   server_name ${SOAPBOX_HOSTNAME}
 
-  listen      ${SOAPBOX_PORT};
-  listen      [::]:${SOAPBOX_PORT};
+  listen      3000;
+  listen      [::]:3000;
 
   root /opt/soapbox/static;
 
