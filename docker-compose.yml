@@ -3,6 +3,8 @@ version: '3.4'
 services:
   nginx:
     build: .
+    expose:
+      - ${SOAPBOX_PORT}
     ports:
       - ${SOAPBOX_PORT}:80
     volumes:
@@ -10,13 +12,13 @@ services:
       - ./config/nginx/templates:/etc/nginx/templates:ro
     environment:
       SOAPBOX_HOSTNAME: ${SOAPBOX_HOSTNAME}
-      PLEROMA_HOSTNAME: ${PLEROMA_HOSTNAME}
+      SOAPBOX_PORT: ${SOAPBOX_PORT}
+      LETSENCRYPT_HOST: ${SOAPBOX_HOSTNAME}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      LETSENCRYPT_TEST: false
     networks:
-      - caddy
-    labels:
-      caddy: ${SOAPBOX_HOSTNAME}
-      caddy.reverse_proxy: nginx:${SOAPBOX_PORT}
+      - front
 
 networks:
-  caddy:
+  front:
     external: true
