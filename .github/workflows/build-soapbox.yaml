@@ -6,9 +6,9 @@ on:
       - master
 
 env:
-  NODE_ENV: ${{ vars.NODE_ENV }}
-  BACKEND_URL: ${{ vars.BACKEND_URL }}
-  PROXY_HTTPS_INSECURE: ${{ vars.PROXY_HTTPS_INSECURE }}
+  NODE_ENV: ${{ secrets.NODE_ENV }}
+  BACKEND_URL: ${{ secrets.BACKEND_URL }}
+  PROXY_HTTPS_INSECURE: ${{ secrets.PROXY_HTTPS_INSECURE }}
 
 jobs:
   Build:
