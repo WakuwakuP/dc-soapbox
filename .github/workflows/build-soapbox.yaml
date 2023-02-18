@@ -1,0 +1,38 @@
+name: Soapbox Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - uses: actions/cache@v2
+        with:
+          path: soapbox/node-modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('soapbox/yarn.lock') }}-${{ hashFiles('soapbox/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: move to soapbox
+        run: |
+          cd soapbox
+      - name: yarn install
+        run: |
+          yarn
+      - name: yarn build
+        run: |
+          yarn build
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: soapbox-build
+          path: soapbox/static
