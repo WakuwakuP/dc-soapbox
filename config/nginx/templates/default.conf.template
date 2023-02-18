@@ -3,7 +3,7 @@ server {
 
   listen      80;
 
-  root        /opt/soapbox/static;
+  root        /opt/soapbox;
 
   location / {
     try_files $uri /index.html;
