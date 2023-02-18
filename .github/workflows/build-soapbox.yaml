@@ -37,10 +37,12 @@ jobs:
       #     name: soapbox-fe
       #     path: soapbox/static
       - name: Zip output
+        if: startsWith( github.ref, 'refs/tags/v' )
         run: |
           cd soapbox/static
           zip -r ../../soapbox-fe.zip .
       - name: Create release
+        if: startsWith( github.ref, 'refs/tags/v' )
         id: create_release
         uses: actions/create-release@v1.0.0
         env:
@@ -51,6 +53,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload Release Asset
+        if: startsWith( github.ref, 'refs/tags/v' )
         id: upload-release-asset
         uses: actions/upload-release-asset@v1.0.1
         env:
