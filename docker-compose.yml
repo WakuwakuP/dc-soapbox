@@ -6,7 +6,7 @@ services:
     ports:
       - ${SOAPBOX_PORT}:${SOAPBOX_PORT}
     volumes:
-      - ./setting/nginx/nginx.conf:/etc/nginx/nginx.conf
+      # - ./setting/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./setting/nginx/templates:/etc/nginx/templates
     environment:
       SOAPBOX_HOSTNAME: ${SOAPBOX_HOSTNAME}
