@@ -25,15 +25,29 @@ jobs:
       - name: yarn install
         if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }}
         run: cd soapbox && yarn
-      - name: build
+
+      - name: build soapbox.wakuwakup.net
         run: cd soapbox && yarn build
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL_WAKUWAKUP_NET }}
           PROXY_HTTPS_INSECURE: ${{ secrets.PROXY_HTTPS_INSECURE }}
 
-      - name: Upload Build
+      - name: Upload artifact soapbox.wakuwakup.net
         uses: actions/upload-artifact@v2
         with:
-          name: soapbox-fe
+          name: soapbox-fe-wakuwakup-net
+          path: soapbox/static
+
+      - name: build sb.nagi.fan
+        run: cd soapbox && yarn build
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL_NAGI_FAN }}
+          PROXY_HTTPS_INSECURE: ${{ secrets.PROXY_HTTPS_INSECURE }}
+
+      - name: Upload artifact soapbox.wakuwakup.net
+        uses: actions/upload-artifact@v2
+        with:
+          name: soapbox-fe-nagi-fan
           path: soapbox/static
