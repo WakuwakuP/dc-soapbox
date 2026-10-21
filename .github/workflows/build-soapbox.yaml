@@ -24,7 +24,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: yarn install
         if: ${{ steps.cache-node-modules.outputs.cache-hit != 'true' }}
-        run: cd soapbox && yarn
+        run: node prepare-guard.cjs && cd soapbox && yarn
 
       - name: build soapbox.wakuwakup.net
         run: cd soapbox && yarn build
